@@ -4,8 +4,7 @@ const cors = require("cors");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const MAILCHIMP_API_KEY = process.env.MAILCHIMP_API_KEY || "e0cc4ccff5b4463bf5981d670e0d45f6-us1";
-const DC = MAILCHIMP_API_KEY ? MAILCHIMP_API_KEY.split("-").pop() : "us1";
+const MAILCHIMP_API_KEY = process.env.MAILCHIMP_API_KEY;
 
 // Explicit CORS — allow all origins including Claude artifact sandbox
 app.use((req, res, next) => {
