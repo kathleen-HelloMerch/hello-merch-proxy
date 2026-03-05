@@ -1,3 +1,4 @@
+
 const express = require("express");
 const cors = require("cors");
 
@@ -6,7 +7,16 @@ const PORT = process.env.PORT || 3000;
 const MAILCHIMP_API_KEY = process.env.MAILCHIMP_API_KEY;
 const DC = MAILCHIMP_API_KEY ? MAILCHIMP_API_KEY.split("-").pop() : "us1";
 
-app.use(cors());
+// Explicit CORS — allow all origins including Claude artifact sandbox
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  if (req.method === "OPTIONS") return res.sendStatus(200);
+  next();
+});
+
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 
 // Health check
